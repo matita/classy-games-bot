@@ -1,0 +1,28 @@
+{
+  "name": "classy-games-bot",
+  "version": "0.1.0",
+  "description": "Bot for Classy Games Discord server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matita/classy-games-bot.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matita/classy-games-bot/issues"
+  },
+  "homepage": "https://github.com/matita/classy-games-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "dotenv": "^5.0.1",
+    "nedb": "^1.8.0"
+  },
+  "engines": {
+    "node": "9.x"
+  }
+}
