@@ -3,21 +3,22 @@ Bot for the Classy Games Discord server
 
 ## How to contribute
 
-1. clone this repository on your computer:  
-   `git clone https://github.com/matita/classy-games-bot`
-2. look at the board at waffle:  
+1. fork this repository by clicking **Fork** on the upper right corner of the repository page
+2. clone your forked repository on your computer (replace `<your-user>` with your GitHub username):  
+   `git clone https://github.com/<your-user>/classy-games-bot`
+3. look at the board at waffle:  
    [![Waffle.io - Columns and their card count](https://badge.waffle.io/matita/classy-games-bot.svg?columns=all)](https://waffle.io/matita/classy-games-bot)
-3. check a task in the **To Do** column and drag it on the **In Progress** column to notify other contributors that you're working on it
-4. create a branch with a name that starts with the task number (the number in the top left corner of the task) and has a very short description of the task  
+4. check a task in the **To Do** column and drag it on the **In Progress** column to notify other contributors that you're working on it
+5. create a branch with a name that starts with the task number (the number in the top left corner of the task) and has a very short description of the task  
    e.g. `3-contributors-guide`
-5. do all your work and do how many commits you want (that's your branch, after all)
-6. publish your branch on the remote repository and create the pull request putting in the description the word **closes** and the number of the task it fixes preceded by #  
+6. do all your work and do how many commits you want (that's your branch, after all)
+7. publish your branch on the remote repository and create the pull request putting in the description the word **closes** and the number of the task it fixes preceded by #  
    e.g. `closes #3 - added contributing guide to README.md`  
    This is important in order for Waffle to properly close the task
-7. accept critiques and discussions about your pull request, make the edits you're asked (if asked) and enjoy it being merged by the repository
-8. your work on the task is done, you can go back to step **2** and work on another task!
+8. accept critiques and discussions about your pull request, make the edits you're asked (if asked) and enjoy it being merged by the repository
+9. your work on the task is done, you can go back to step **3** and work on another task!
 
-## Test your code
+### Test your code
 
 You'll likely need to do this just the first time.
 
