@@ -11,14 +11,14 @@ let replies = shuffle([
 ])
 
 /** @param {Discord.Message} message */
-module.exports = message => {
+module.exports = async message => {
     if (currentReply >= replies.length) {
-        message.reply('I finished stupid things to say')
+        await message.reply('I finished stupid things to say')
         currentReply = 0
         shuffle(replies)
         return
     }
 
-    message.reply(replies[currentReply])
+    await message.reply(replies[currentReply])
     currentReply++
 }
