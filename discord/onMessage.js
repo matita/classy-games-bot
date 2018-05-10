@@ -16,15 +16,18 @@ module.exports = (client) => {
         try
         {
             switch (command) {
-                case 'greetme':
-                    await greetUser(message.author)
+                case 'greet':
+                    if (!message.member)
+                        await message.reply('you should call this command from a server channel')
+                    else
+                        await greetUser(message.member)
                     break
 
                 default:
                     await randomReply(message)
             }
         } catch (e) {
-            message.channel.send('```\n' + e.message + '\n```')
+            message.channel.send('```\n' + e.message + '\n\n' + e.stack + '\n```')
         }
     })
 }
