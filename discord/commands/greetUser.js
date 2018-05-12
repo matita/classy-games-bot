@@ -6,6 +6,8 @@ const tmpl = require('../../utils/tmpl')
 const delay = require('../../utils/delay')
 const writeList = require('../../utils/writeList')
 const channels = require('../../utils/channels')
+const removeRoles = require('../utils/removeRoles')
+const assignRoles = require('../utils/assignRoles')
 
 const roles = {
   [emojis.numbers[1]]: { name: 'Artist' },
@@ -58,6 +60,12 @@ const texts = {
     'Please type the corresponding number to which sub roles/skills you have followed by a `,` to separate each number.',
     'For example: I am programmed in `5. JavaScript` and I love `11. Pixel Art`. So I would type:\n```\n5, 11\n```',
     'So what are your sub roles/skills?'
+  ].join('\n\n'),
+
+  rolesAssigned: [
+    'Great! All of your roles have been assigned.',
+    `Please remember to read all our rules at <#${channels.RULES}> and introduce yourself at <#${channels.MEMBER_INFO}> by describing who you are and why you are interested in game dev.`,
+    ' Welcome to the server!'
   ].join('\n\n')
 }
 
@@ -70,15 +78,46 @@ module.exports = async (member) => {
     await member.send(tmpl(texts.welcome, member))
 
     const mainRoleName = await askMainRole(member)
-    const skillsIndexes = await askSkills(member)
+    const userSkills = await askSkills(member)
 
-    await member.send('Roles assigned!')
-    await member.send(`Go to <#${channels.MEMBER_INFO}> and introduce yourself!`)
+    member.user.dmChannel.startTyping()
+    await Promise.all([
+      member.send('I\'m assigning you the roles you selected'),
+      assignMainRole(member, mainRoleName),
+      assignSkills(member, userSkills)
+    ])
+    member.user.dmChannel.stopTyping(true)
+
+    await member.send(texts.rolesAssigned)
   } catch (e) {
     await member.send('Sorry, something bad happened. Please ask <#' + channels.ASK_A_MOD + '> for some help and tell them you had this error during the greeting:\n```\n' + e.message + '\n```')
     e.message = 'Error while greeting **' + member.displayName + '**:\n' + e.message
     throw e
   }
+}
+
+
+/**
+ * 
+ * @param {Discord.GuildMember} member 
+ * @param {string} roleName 
+ */
+async function assignMainRole(member, roleName) {
+  const otherRoles = rolesEmojis
+    .map(e => roles[e].name)
+    .filter(r => r !== roleName)
+  await removeRoles(member, otherRoles)
+  return await assignRoles(member, [roleName])
+}
+
+
+/**
+ * 
+ * @param {Discord.GuildMember} member 
+ * @param {Array.<string>} skillNames 
+ */
+async function assignSkills(member, skillNames) {
+  return await assignRoles(member, skillNames)
 }
 
 /** @param {Discord.GuildMember} user */
