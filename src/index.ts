@@ -1,5 +1,7 @@
 require('dotenv').config()
-require('./utils/mandatoryEnv')([
+import { mandatoryEnv } from './utils/mandatoryEnv'
+
+mandatoryEnv([
     'DISCORD_CLIENT_ID',
     'DISCORD_BOT_TOKEN',
     'PORT'

@@ -1,8 +1,4 @@
-/** 
- * Check if all the properties are specified in process.env
- * @param {Array.<string>} props 
- */
-module.exports = props => {
+export const mandatoryEnv = (props: string[]) => {
     const missingProperties = props.filter(p => !process.env.hasOwnProperty(p))
     if (!missingProperties.length)
         return

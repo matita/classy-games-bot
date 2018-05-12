@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-const shuffle = require('../../utils/shuffle')
+import { shuffle } from '../../utils/shuffle'
 
 let currentReply = 0
 let replies = shuffle([
