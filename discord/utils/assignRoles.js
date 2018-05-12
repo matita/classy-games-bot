@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const getOrCreateRoles = require('./getOrCreateRoles')
 
 /**
  * 
@@ -7,9 +8,9 @@ const Discord = require('discord.js')
  */
 module.exports = async (member, roleNames) => {
     const { guild } = member
-    const rolesToApply = await Promise.all(roleNames.map(async r => guild.roles.find('name', r) || await guild.createRole({ name: r })))
-    const missingRoles = rolesToApply.filter(r => !member.roles.get(r.id))
+    const roles = await getOrCreateRoles(guild, roleNames)
+    const missingRoles = roles.filter(r => !member.roles.get(r.id))
     if (!missingRoles.length)
-        return
-    await member.addRoles(missingRoles)
+        return member
+    return member.addRoles(missingRoles)
 }

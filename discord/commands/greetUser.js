@@ -155,7 +155,7 @@ async function askSkills(member) {
     const userSkills = skillsReplies.first().content.split(/\D+/)
       .map(i => skills[parseInt(i, 10) - 1])
     
-    const confirmed = await simpleConfirm(user, `That's great. So your skills are ${writeList(userSkills)}. Is that correct?`, user)
+    const confirmed = await simpleConfirm(user, `That's great. So your skills are ${writeList(userSkills.map(s => `**${s}**`))}. Is that correct?`, user)
     if (confirmed)
       return userSkills
 
