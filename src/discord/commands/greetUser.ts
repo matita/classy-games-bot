@@ -1,15 +1,15 @@
-const Discord = require('discord.js')
-const emojis = require('../../utils/emojis')
-const confirmReaction = require('../utils/confirmReaction')
-const { simpleConfirm } = confirmReaction
-const tmpl = require('../../utils/tmpl')
-const delay = require('../../utils/delay')
-const writeList = require('../../utils/writeList')
-const channels = require('../../utils/channels')
-const removeRoles = require('../utils/removeRoles')
-const assignRoles = require('../utils/assignRoles')
+import { GuildMember } from "discord.js";
+import { emojis } from '../../utils/emojis'
+import { confirmReaction, simpleConfirm } from '../utils/confirmReaction'
+import { tmpl } from '../../utils/tmpl'
+import { delay } from '../../utils/delay'
+import { writeList } from '../../utils/writeList'
+import { channels } from '../../utils/channels'
+import { removeRoles } from '../utils/removeRoles'
+import { assignRoles } from '../utils/assignRoles'
 
-const roles = {
+type RoleDescription = { name: string, description?: string }
+const roles: { [key: string]: RoleDescription } = {
   [emojis.numbers[1]]: { name: 'Artist' },
   [emojis.numbers[2]]: { name: 'Audio' },
   [emojis.numbers[3]]: { name: 'Designer' },
@@ -69,11 +69,8 @@ const texts = {
   ].join('\n\n')
 }
 
-/**
- * 
- * @param {Discord.GuildMember} member 
- */
-module.exports = async (member) => {
+
+export const greetUser = async (member: GuildMember) => {
   try {
     await member.send(tmpl(texts.welcome, member))
 
@@ -97,12 +94,7 @@ module.exports = async (member) => {
 }
 
 
-/**
- * 
- * @param {Discord.GuildMember} member 
- * @param {string} roleName 
- */
-async function assignMainRole(member, roleName) {
+async function assignMainRole(member: GuildMember, roleName: string) {
   const otherRoles = rolesEmojis
     .map(e => roles[e].name)
     .filter(r => r !== roleName)
@@ -111,33 +103,28 @@ async function assignMainRole(member, roleName) {
 }
 
 
-/**
- * 
- * @param {Discord.GuildMember} member 
- * @param {Array.<string>} skillNames 
- */
-async function assignSkills(member, skillNames) {
+async function assignSkills(member: GuildMember, skillNames: string[]) {
   return await assignRoles(member, skillNames)
 }
 
-/** @param {Discord.GuildMember} user */
-async function askMainRole(member) {
+
+async function askMainRole(member: GuildMember): Promise<string> {
   const { user } = member
   do {
-    const reacted = await confirmReaction(user, texts.assignRole, rolesEmojis, user)
+    const reacted = await confirmReaction(user.dmChannel, texts.assignRole, rolesEmojis, user)
     const reactedEmoji = reacted.emoji.name
     const mainRole = roles[reactedEmoji]
     const mainRoleName = mainRole.name
 
-    const confirmed = await simpleConfirm(user, `Great! So you are a ${mainRoleName}. Correct?`, user)
+    const confirmed = await simpleConfirm(user.dmChannel, `Great! So you are a ${mainRoleName}. Correct?`, user)
     if (confirmed)
       return mainRoleName
 
   } while (true)
 }
 
-/** @param {Discord.GuildMember} member */
-async function askSkills(member) {
+
+async function askSkills(member: GuildMember) : Promise<string[]> {
   const { user } = member
   const skillsTexts = skills.map((s, i) => `${i+1}. ${s}`)
   do {
@@ -155,7 +142,7 @@ async function askSkills(member) {
     const userSkills = skillsReplies.first().content.split(/\D+/)
       .map(i => skills[parseInt(i, 10) - 1])
     
-    const confirmed = await simpleConfirm(user, `That's great. So your skills are ${writeList(userSkills.map(s => `**${s}**`))}. Is that correct?`, user)
+    const confirmed = await simpleConfirm(user.dmChannel, `That's great. So your skills are ${writeList(userSkills.map(s => `**${s}**`))}. Is that correct?`, user)
     if (confirmed)
       return userSkills
 

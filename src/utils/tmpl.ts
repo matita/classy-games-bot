@@ -1,11 +1,6 @@
-/**
- * 
- * @param {string} text 
- * @param {Object} obj 
- */
-module.exports = (text, obj) => text.replace(/\{([^\}]+)\}/g, (match, keyword) => {
+export const tmpl = (text: string, obj: any) => text.replace(/\{([^\}]+)\}/g, (match: string, keyword: any) => {
     const parts = keyword.split('.')
-    let res = obj
+    let res = obj, word
     for (let i = 0; i < parts.length; i++) {
         word = parts[i]
         res = res[word]

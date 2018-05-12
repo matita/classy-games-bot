@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+import { Message } from "discord.js";
 const shuffle = require('../../utils/shuffle')
 
 let currentReply = 0
@@ -10,8 +10,8 @@ let replies = shuffle([
     'Don\'t bother me'
 ])
 
-/** @param {Discord.Message} message */
-module.exports = async message => {
+
+export const randomReply =  async (message: Message) => {
     if (currentReply >= replies.length) {
         await message.reply('I finished stupid things to say')
         currentReply = 0

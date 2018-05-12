@@ -1,12 +1,7 @@
-const Discord = require('discord.js')
-const getOrCreateRoles = require('./getOrCreateRoles')
+import { GuildMember } from 'discord.js'
+import { getOrCreateRoles } from './getOrCreateRoles'
 
-/**
- * 
- * @param {Discord.GuildMember} member 
- * @param {Array.<string>} roleNames 
- */
-module.exports = async (member, roleNames) => {
+export const assignRoles =  async (member: GuildMember, roleNames: string[]) => {
     const { guild } = member
     const roles = await getOrCreateRoles(guild, roleNames)
     const missingRoles = roles.filter(r => !member.roles.get(r.id))
