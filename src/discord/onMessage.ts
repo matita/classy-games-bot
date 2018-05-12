@@ -1,11 +1,10 @@
-const Discord = require('discord.js')
-const randomReply = require('./commands/randomReply')
-const greetUser = require('./commands/greetUser')
+import { Client, Message } from 'discord.js'
+import { randomReply } from './commands/randomReply'
+import { greetUser } from './commands/greetUser'
 
 
-/** @param {Discord.Client} client */
-module.exports = (client) => {
-    client.on('message', async message => {
+export const onMessage = (client: Client) => {
+    client.on('message', async (message: Message) => {
         if (!message.isMentioned(client.user))
             return
 

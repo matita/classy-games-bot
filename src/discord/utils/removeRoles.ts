@@ -1,11 +1,6 @@
-const Discord = require('discord.js')
+import { GuildMember } from "discord.js";
 
-/**
- * 
- * @param {Discord.GuildMember} member 
- * @param {Array.<string>} roleNames 
- */
-module.exports = async (member, roleNames) => {
+export const removeRoles = async (member: GuildMember, roleNames: string[]) => {
     const roles = roleNames
         .map(r => member.roles.find('name', r))
         .filter(r => r)

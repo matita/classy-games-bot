@@ -1,8 +1,4 @@
-/** 
- * @param {Array.<string>} texts 
- * @return {string}
- */
-module.exports = (texts) => {
+export const writeList = (texts: string[]) => {
     if (!texts || !texts.length)
         return ''
 

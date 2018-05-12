@@ -1,4 +1,4 @@
-module.exports = {
+export const channels = {
     ASK_A_MOD: '442200209884184596',
     MEMBER_INFO: '327956459860000770',
     RULES: '441316024462213148'
