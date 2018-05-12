@@ -1,11 +1,13 @@
 const Discord = require('discord.js')
-const handleMessages = require('./onMessage')
+const onMessage = require('./onMessage')
+const onMemberAdd = require('./onMemberAdd')
 
 module.exports = (token) => {
     const client = new Discord.Client()
     client.on('ready', () => console.log('Bot ready!'))
     
-    handleMessages(client)
+    onMessage(client)
+    onMemberAdd(client)
 
     client.login(token)
     return client
